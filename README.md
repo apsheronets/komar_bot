@@ -1,5 +1,5 @@
 BEST TELEGRAM BOT EVAR
 ======================
 
-!(http://komar.in/files/telegram-bot.jpg)
+![fucking markdown](http://komar.in/files/telegram-bot.jpg)
 

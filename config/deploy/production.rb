@@ -6,6 +6,7 @@
 # server 'example.com', user: 'deploy', roles: %w{app db web}, my_property: :my_value
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
+server 'avito2rss.bitcheese.net', user: 'komar_bot', roles: %w{app db}
 
 
 
@@ -30,7 +31,9 @@
 # For available Capistrano configuration variables see the documentation page.
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
-
+set :user, (fetch :application)
+set :deploy_to, "/home/#{fetch :application}/"
+set :app_env, :production
 
 
 # Custom SSH Options

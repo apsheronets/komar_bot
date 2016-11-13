@@ -1,0 +1,20 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'bundler/setup'
+require 'daemons'
+require 'telegram/bot'
+require 'yaml'
+
+ROOT = File.expand_path(File.join(__dir__, '..'))
+
+Dir[File.expand_path(File.join(ROOT, 'lib/*.rb'))].each {|lib| require lib}
+
+Daemons.run(File.join(ROOT, 'app.rb'),
+  multiple: false, # DO NOT enable multiple mode for this kind of bot
+  monitor: true,
+  dir: 'pids',
+  log_output: false,
+  backtrace: false,
+  log_dir: 'log',
+)

@@ -31,7 +31,7 @@ running = true
 begin
   offset = TelegramUpdate.order('id DESC').first.try(:id)
   logger.debug "starting with offset #{offset.inspect}"
-  Telegram::Bot::Client.run(token, offset: offset, timeout: 2) do |bot|
+  Telegram::Bot::Client.run(token, offset: offset, timeout: polling_interval) do |bot|
     logger.info 'listening to telegram'
     responder = MessageResponder.new(bot)
     bot.listen do |message|

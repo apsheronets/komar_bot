@@ -23,8 +23,8 @@ ActiveRecord::Base.logger = logger
 def reoconnect_activerecord_until_avlie!
   begin
     while !ActiveRecord::Base.connection.active? do
-      logger.error 'database connection is dead'
-      logger.error 'reconnecting to DB in a second'
+      Configuration.logger.error 'database connection is dead'
+      Configuration.logger.error 'reconnecting to DB in a second'
       sleep(1)
       ActiveRecord::Base.connection.reconnect!
     end

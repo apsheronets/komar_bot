@@ -1,0 +1,12 @@
+default: &default
+  adapter: postgresql
+  database: komar_bot
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+
+production:
+  <<: *default

@@ -4,13 +4,30 @@ MessageResponder = Struct.new(:bot) do
 
   def respond(message)
     text = MESSAGES.sample
-    send_message(chat_id: message.chat.id, text: text)
+    send(chat_id: message.chat.id, text: text)
   end
 
-  def send_message(args)
-    log_line = sprintf(" => <%8s>: %s", args[:chat_id], args[:text])
+  def log_incoming(message)
+    log_line = sprintf(" <= <%8s>: %s", message.chat.id, message.text)
+    Configuration.logger.info log_line
+    Configuration.logger.info log_line
+    Configuration.logger.debug message
+  end
+
+  def send(message)
+    log_outgoing message
+    bot.api.send_message message
+  end
+
+  def log_outgoing(message)
+    log_line = sprintf(" => <%8s>: %s", message[:chat_id], message[:text])
     Configuration.logger.info log_line
     Configuration.chat_logger.info log_line
-    bot.api.send_message(args)
   end
+
+  def answer_with_error(message)
+    text = %{Sorry, something horrible happened. I hope my developer will handle this soon. Try again, huh?}
+    bot.api.send_message(chat_id: message.chat.id, text: text)
+  end
+
 end

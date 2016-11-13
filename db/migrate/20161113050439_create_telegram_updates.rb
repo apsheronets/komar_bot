@@ -1,4 +1,4 @@
-class CreateTelegramUpdates < ActiveRecord::Migration[5.0]
+class CreateTelegramUpdates < ActiveRecord::Migration
   def change
     create_table :telegram_updates, id: false do |t|
       t.integer :id, :limit => 8, primary_key: true

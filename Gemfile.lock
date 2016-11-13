@@ -12,11 +12,20 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    airbrussh (1.1.1)
+      sshkit (>= 1.6.1, != 1.7.0)
     arel (7.1.4)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
+    capistrano (3.6.1)
+      airbrussh (>= 1.0.0)
+      capistrano-harrow
+      i18n
+      rake (>= 10.0.0)
+      sshkit (>= 1.9.0)
+    capistrano-harrow (0.5.3)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.0.2)
@@ -30,8 +39,14 @@ GEM
     ice_nine (0.11.2)
     minitest (5.9.1)
     multipart-post (2.0.0)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (3.2.0)
     pg (0.19.0)
     rake (11.3.0)
+    sshkit (1.11.4)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
     telegram-bot-ruby (0.6.0.1)
       faraday
       virtus
@@ -49,6 +64,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (~> 5.0.0)
+  capistrano (~> 3.6)
   daemons
   pg
   rake

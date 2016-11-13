@@ -1,21 +1,12 @@
-#!/usr/bin/ruby
-
-require 'rubygems'
-require 'telegram/bot'
-require 'yaml'
-require 'pp'
-require './lib/configuration.rb'
-require './lib/message_responder.rb'
-require './lib/models.rb'
 
 env = ENV.fetch('APP_ENV', 'development')
 
-token = YAML::load(IO.read('config/secrets.yml'))['telegram_bot_token']
+token = YAML::load(IO.read(File.join(__dir__, 'config', 'secrets.yml')))['telegram_bot_token']
+database_config = YAML::load(IO.read(File.join(__dir__, 'config', 'database.yml')))[env]
 
 logger = Configuration.logger
 chat_logger = Configuration.chat_logger
 
-database_config = YAML::load(IO.read('config/database.yml'))[env]
 ActiveRecord::Base.establish_connection database_config
 ActiveRecord::Base.default_timezone = :utc
 ActiveRecord::Base.logger = logger

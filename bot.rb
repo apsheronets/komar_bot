@@ -45,7 +45,7 @@ begin
     responder = MessageResponder.new(bot)
     bot.listen do |message|
       TelegramUpdate.find_or_create_by(id: bot.offset)
-      log_incoming message
+      responder.log_incoming message
       begin
         Timeout.timeout(repond_timeout) do
           responder.respond message

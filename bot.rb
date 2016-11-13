@@ -38,7 +38,7 @@ repond_timeout = 20
 
 running = true
 begin
-  offset = TelegramUpdate.order('id DESC').first&.id
+  offset = TelegramUpdate.order('id DESC').first.try(:id)
   logger.debug "starting with offset #{offset.inspect}"
   Telegram::Bot::Client.run(token, offset: offset, timeout: 2) do |bot|
     logger.info 'listening to telegram'

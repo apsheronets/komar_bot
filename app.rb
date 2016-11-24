@@ -24,7 +24,7 @@ def reoconnect_activerecord_until_avlie!
   end
 end
 
-polling_interval = env == 'development' ? 3 : nil
+polling_interval = env == 'development' ? 3 : 10
 repond_timeout = 20
 
 running = true

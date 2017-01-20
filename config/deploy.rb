@@ -44,7 +44,7 @@ namespace :daemons do
     on roles(:app) do
       within current_path do
         with app_env: fetch(:app_env) do
-          execute :bundle, "exec bin/bot restart"
+          execute :bundle, "exec ruby bin/bot restart"
         end
       end
     end
@@ -54,7 +54,7 @@ namespace :daemons do
     on roles(:app) do
       within current_path do
         with app_env: fetch(:app_env) do
-          execute :bundle, "exec bin/bot start"
+          execute :bundle, "exec ruby bin/bot start"
         end
       end
     end
@@ -64,7 +64,7 @@ namespace :daemons do
     on roles(:app) do
       within current_path do
         with app_env: fetch(:app_env) do
-          execute :bundle, "exec bin/bot stop"
+          execute :bundle, "exec ruby bin/bot stop"
         end
       end
     end

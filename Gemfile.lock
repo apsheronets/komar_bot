@@ -42,7 +42,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     i18n (0.7.0)
     ice_nine (0.11.2)
-    json (1.8.3)
+    json (1.8.6)
     minitest (5.9.1)
     multipart-post (2.0.0)
     net-scp (1.2.1)
@@ -78,4 +78,4 @@ DEPENDENCIES
   telegram-bot-ruby
 
 BUNDLED WITH
-   1.12.5
+   2.2.8

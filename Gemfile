@@ -10,3 +10,5 @@ group :development do
   gem "capistrano", "~> 3.6"
   gem 'capistrano-bundler', '~> 1.2'
 end
+
+gem 'bigdecimal', '1.3.5' # compatibility, remove in future

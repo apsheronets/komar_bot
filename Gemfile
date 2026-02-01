@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'telegram-bot-ruby'
+gem 'telegram-bot-ruby', '0.22.0'
 gem 'activerecord', '7.1.5'
 gem 'pg', '~> 1.5.0' # further versions are incompatible with bookworm
 gem 'rake'

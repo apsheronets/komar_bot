@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
+require 'rubygems'
+require 'bundler/setup'
+require 'daemons'
+
+Daemons.run(File.expand_path('app', __dir__),
+  multiple: false, # DO NOT enable multiple mode for this kind of bot
+  dir: '../pids',
+  log_output: false,
+  backtrace: false,
+  log_dir: 'log',
+)

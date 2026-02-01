@@ -1,6 +1,3 @@
-# config valid only for current version of Capistrano
-lock '3.6.1'
-
 set :application, 'komar_bot'
 set :repo_url, "git@github.com:apsheronets/#{fetch :application}.git"
 
@@ -54,7 +51,7 @@ namespace :daemons do
     on roles(:app) do
       within current_path do
         with app_env: fetch(:app_env) do
-          execute :bundle, "exec ruby bin/bot start"
+          execute :bundle, "exec ruby bin/daemon start"
         end
       end
     end
@@ -64,7 +61,7 @@ namespace :daemons do
     on roles(:app) do
       within current_path do
         with app_env: fetch(:app_env) do
-          execute :bundle, "exec ruby bin/bot stop"
+          execute :bundle, "exec ruby bin/daemon stop"
         end
       end
     end

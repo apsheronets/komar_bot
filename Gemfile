@@ -1,14 +1,12 @@
 source 'https://rubygems.org'
 
 gem 'telegram-bot-ruby'
-gem 'activerecord', '~> 4.0'
-gem 'pg'
+gem 'activerecord'
+gem 'pg', '~> 1.5.0' # further versions are incompatible with bookworm
 gem 'rake'
 gem 'daemons'
 
 group :development do
   gem "capistrano", "~> 3.6"
-  gem 'capistrano-bundler', '~> 1.2'
+  gem 'capistrano-bundler'
 end
-
-gem 'bigdecimal', '1.3.5' # compatibility, remove in future

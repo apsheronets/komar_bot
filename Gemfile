@@ -10,6 +10,7 @@ gem 'daemons'
 gem 'nokogiri', '< 1.16'
 gem 'securerandom', '< 0.4'
 gem 'minitest', '~> 5.25.0'
+gem 'dry-inflector', '~> 1.0.0'
 
 group :development do
   gem 'capistrano'

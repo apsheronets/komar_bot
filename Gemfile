@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'telegram-bot-ruby'
-gem 'activerecord', '~> 7.0' # < 7.1 is a disaster
+gem 'activerecord', '7.1.5'
 gem 'pg', '~> 1.5.0' # further versions are incompatible with bookworm
 gem 'rake'
 gem 'daemons'

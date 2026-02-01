@@ -68,7 +68,7 @@ GEM
       net-ssh (>= 5.0.0, < 8.0.0)
     net-ssh (7.3.0)
     ostruct (0.6.3)
-    pg (1.6.3-x86_64-linux)
+    pg (1.6.3)
     psych (5.3.1)
       date
       stringio

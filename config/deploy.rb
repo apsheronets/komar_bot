@@ -1,5 +1,6 @@
 set :application, 'komar_bot'
 set :repo_url, "git@github.com:apsheronets/#{fetch :application}.git"
+set :deploy_via, :copy
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -10,6 +11,7 @@ set :branch, :refucktoring
 
 # Default value for :scm is :git
 # set :scm, :git
+set :scm, :gitcopy
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -41,7 +43,7 @@ namespace :daemons do
     on roles(:app) do
       within current_path do
         with app_env: fetch(:app_env) do
-          execute :bundle, "exec ruby bin/bot restart"
+          execute :bundle, "exec ruby bin/daemon restart"
         end
       end
     end

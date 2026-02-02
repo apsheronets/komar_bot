@@ -8,7 +8,7 @@ Application.establish_activerecord!
 logger = Application.logger
 chat_logger = Application.chat_logger
 
-polling_interval = Application.settings.dig("telegram_bot", "polling_interval") || 10
+polling_interval = Application.settings.dig(:telegram_bot, :polling_interval) || 10
 
 MESSAGES = ['Иди на хуй', 'Хуита', 'Съеби']
 

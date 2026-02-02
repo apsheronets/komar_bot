@@ -14,18 +14,18 @@ module Application
     unless @settings
       path = File.expand_path "./settings.yml", __dir__
       begin
-        @settings = Psych.unsafe_load(IO.read(path), freeze: true)
+        @settings = Psych.unsafe_load(IO.read(path), freeze: true, symbolize_names: true)
       rescue => e
         $stderr.puts "while reading config #{path}: #{e}"
         raise e
       end
-      ensure_config_contains(path, @settings, "telegram_bot", "token")
+      ensure_config_contains(path, @settings, :telegram_bot, :token)
     end
     @settings
   end
 
   def telegram_bot_token
-    @telegram_bot_token ||= settings["telegram_bot"]["token"]
+    @telegram_bot_token ||= settings[:telegram_bot][:token]
   end
 
   def establish_activerecord!(app_name: nil)
@@ -35,12 +35,7 @@ module Application
   end
 
   def establish_activerecord_for_threads(pool:)
-    defaults = {
-      "adapter" => "postgresql",
-      "encoding" =>  "UTF8",
-      "idle_timeout" => 0, # disable
-    }
-    args = defaults.merge(settings["activerecord"] || {})
+    args = ActiverecordDefaultCredentials.merge(settings[:activerecord] || {})
     args["pool"] = pool if pool
     ActiveRecord::Base.establish_connection args
     ActiveRecord.default_timezone = :utc # ActiveRecord 7
@@ -132,9 +127,9 @@ module Application
   def logger
     unless @logger
       levels = %i(debug info warn error fatal any).freeze
-      if settings["log_level"]
+      if settings[:log_level]
         # TODO: validate the value
-        log_level = settings["log_level"].to_sym
+        log_level = settings[:log_level].to_sym
       else
         log_level = :info
       end

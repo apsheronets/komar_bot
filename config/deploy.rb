@@ -24,7 +24,7 @@ set :scm, :gitcopy
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', 'config/secrets.yml'
+append :linked_files, 'settings.yml'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'pids'

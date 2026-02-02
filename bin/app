@@ -8,7 +8,7 @@ Application.establish_activerecord!
 logger = Application.logger
 chat_logger = Application.chat_logger
 
-polling_interval = Application.env == 'development' ? 2 : 10
+polling_interval = Application.settings.dig("telegram_bot", "polling_interval") || 10
 
 MESSAGES = ['Иди на хуй', 'Хуита', 'Съеби']
 
@@ -19,9 +19,7 @@ bot = Telegram::Bot::Client.new(
   Application.telegram_bot_token,
   offset: offset,
   timeout: polling_interval,
-  environment: Application.env.to_sym
 )
-bot.logger = logger if Application.env == "development"
 
 begin
   logger.info 'listening to telegram'

@@ -9,35 +9,23 @@ Dir[File.expand_path('lib/*.rb', __dir__)].each {|lib| require lib}
 module Application
   extend self
 
-  def env
-    @env ||= ENV.fetch('APP_ENV', 'development')
-  end
-
-  def load_config(filename)
-    begin
-      Psych.unsafe_load(IO.read(File.join(__dir__, 'config', filename)), freeze: true)[env]
-    rescue => e
-      logger.error "while reading config #{filename}: #{e}"
-      raise e
+  def settings
+    # can't use logger inside this method: it would go recursive
+    unless @settings
+      path = File.expand_path "./settings.yml", __dir__
+      begin
+        @settings = Psych.unsafe_load(IO.read(path), freeze: true)
+      rescue => e
+        $stderr.puts "while reading config #{path}: #{e}"
+        raise e
+      end
+      ensure_config_contains(path, @settings, "telegram_bot", "token")
     end
-  end
-
-  def secrets
-    unless @secrets
-      name = "secrets.yml"
-      hash = load_config name
-      ensure_config_contains(name, hash, "telegram_bot_token")
-      @secrets = hash
-    end
-    @secrets
-  end
-
-  def database_config
-    @database_config ||= load_config "database.yml"
+    @settings
   end
 
   def telegram_bot_token
-    @telegram_bot_token ||= secrets["telegram_bot_token"]
+    @telegram_bot_token ||= settings["telegram_bot"]["token"]
   end
 
   def establish_activerecord!(app_name: nil)
@@ -47,12 +35,14 @@ module Application
   end
 
   def establish_activerecord_for_threads(pool:)
-    if pool
-      config = database_config.merge({ "pool" => pool })
-    else
-      config = database_config
-    end
-    ActiveRecord::Base.establish_connection config
+    defaults = {
+      "adapter" => "postgresql",
+      "encoding" =>  "UTF8",
+      "idle_timeout" => 0, # disable
+    }
+    args = defaults.merge(settings["activerecord"] || {})
+    args["pool"] = pool if pool
+    ActiveRecord::Base.establish_connection args
     ActiveRecord.default_timezone = :utc # ActiveRecord 7
     #ActiveRecord::Base.default_timezone = :utc # ActiveRecord <= 6
     ActiveRecord::Base.logger = logger
@@ -142,9 +132,9 @@ module Application
   def logger
     unless @logger
       levels = %i(debug info warn error fatal any).freeze
-      case env
-      when "development"
-        log_level = :debug
+      if settings["log_level"]
+        # TODO: validate the value
+        log_level = settings["log_level"].to_sym
       else
         log_level = :info
       end
@@ -178,9 +168,10 @@ module Application
   private
 
   def ensure_config_contains(config_name, hash, *path)
-    if hash.nil? || hash.dig(*path).nil?
-      message = "#{env}.#{path.join(".")} is not set in #{config_name}"
-      logger.fatal message
+    # can't use logger inside this method: it would go recursive
+    if hash.nil? || hash == false || hash.dig(*path).nil?
+      message = "#{path.join(".")} is not set in #{config_name}"
+      $stderr.puts message
       raise message
     end
   end

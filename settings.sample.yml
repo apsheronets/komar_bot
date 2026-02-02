@@ -1,0 +1,14 @@
+telegram_bot:
+  token: 
+  #polling_interval: 10
+
+log_level: info # could be: debug, info, warn, error, fatal, any
+                # default is info
+
+#activerecord:
+#  # database credentials to connect
+#  database: komar_bot
+#  username: komar_bot
+#  password: secret
+#  host: localhost
+#  port: 5432

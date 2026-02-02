@@ -1,3 +1,2 @@
-secrets.yml
-database.yml
+settings.yml
 log/*
